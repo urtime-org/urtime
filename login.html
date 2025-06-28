@@ -1,0 +1,96 @@
+<!-- Firebase Login/Signup UI -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | UrTime</title>
+  <link rel="stylesheet" href="styles/style.css" />
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      background: #bfc4c4;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .login-container input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #888;
+      font-size: 16px;
+    }
+
+    .login-container button {
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    .switch-link {
+      margin-top: 10px;
+      display: block;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>🔐 UrTime Login</h2>
+    
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="handleAuth()">Login</button>
+
+    <span class="switch-link" onclick="toggleMode()">Don't have an account? Sign up</span>
+    <p id="auth-msg" style="color: red;"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="scripts/firebase.js"></script>
+
+  <script>
+    let isLogin = true;
+
+    function toggleMode() {
+      isLogin = !isLogin;
+      document.querySelector("button").textContent = isLogin ? "Login" : "Sign Up";
+      document.querySelector(".switch-link").textContent =
+        isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
+    }
+
+    function handleAuth() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("auth-msg");
+
+      if (email === "" || password === "") {
+        msg.textContent = "Please fill in both fields.";
+        return;
+      }
+
+      msg.textContent = "";
+
+      if (isLogin) {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(() => window.location.href = "index.html")
+          .catch(err => msg.textContent = err.message);
+      } else {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(() => window.location.href = "index.html")
+          .catch(err => msg.textContent = err.message);
+      }
+    }
+  </script>
+</body>
+</html>

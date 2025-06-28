@@ -1,0 +1,95 @@
+<!-- Calendar-based stats view -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UrTime | Dashboard</title>
+  <link rel="stylesheet" href="styles/style.css" />
+  <style>
+    .dashboard {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #bfc4c4;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .dashboard h2 {
+      text-align: center;
+    }
+
+    .day-stats {
+      border-bottom: 1px solid #aaa;
+      padding: 10px 0;
+    }
+
+    .day-stats:last-child {
+      border-bottom: none;
+    }
+
+    #stats-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h2>📅 Your Focus History</h2>
+    <div id="stats-container">Loading...</div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase Config -->
+  <script src="scripts/firebase.js"></script>
+
+  <script>
+    const container = document.getElementById("stats-container");
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if (!user) {
+        location.href = "login.html";
+        return;
+      }
+
+      const db = firebase.firestore();
+      const uid = user.uid;
+      const ref = db.collection("urtime-history").doc(uid);
+
+      try {
+        const doc = await ref.get();
+        if (!doc.exists) {
+          container.innerHTML = "<p>No data found yet. Start focusing!</p>";
+          return;
+        }
+
+        const data = doc.data();
+        let html = "";
+
+        Object.keys(data).sort().reverse().forEach(date => {
+          const d = data[date];
+          html += `
+            <div class="day-stats">
+              <strong>${date}</strong><br/>
+              Pomodoros: ${d.pomodoros}<br/>
+              Focused Minutes: ${d.minutes}<br/>
+              Tasks Done: ${d.tasks}
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = "<p>Failed to load data.</p>";
+      }
+    });
+  </script>
+</body>
+</html>

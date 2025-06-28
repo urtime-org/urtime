@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UrTime - Time to Focus!</title>
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <h1 class="header-title">🕒 UrTime - Time to Focus!</h1>
+    <div class="header-actions">
+      <a href="dashboard.html" class="dashboard-link">📊 Dashboard</a>
+      <button onclick="logout()" class="logout-btn">Logout</button>
+    </div>
+  </div>
+
+  <div class="header-controls">
+    <select id="themeSelector">
+      <option value="plant">🌱 Grow a Plant</option>
+      <option value="rocket">🚀 Launch a Rocket</option>
+      <option value="bubble">🫧 Breathe</option>
+    </select>
+    <select id="musicSelector">
+      <option value="none">🔇 No Music</option>
+      <option value="lofi">🎧 Lofi Focus</option>
+      <option value="nature">🌿 Nature Sounds</option>
+      <option value="cafe">☕ Cafe Ambience</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <section class="todo-section">
+    <h2>📝 TO-DO List</h2>
+    <div class="todo-container">
+      <input type="text" id="todo-input" placeholder="Add a task..." />
+      <button onclick="addTask()">＋</button>
+      <ul id="todo-list"></ul>
+      <p id="task-counter">Tasks Done: 0 / 0</p>
+    </div>
+  </section>
+
+  <section class="timer-section">
+    <h2>Pomodoro Session</h2>
+    <div class="timer-display" id="timer">25:00</div>
+    <h3 id="session-label">Work Session</h3>
+
+    <div class="timer-controls">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <div class="mode-switch">
+      <button onclick="switchMode('session')">Start Work Session</button>
+      <button onclick="switchMode('break')">Start Break</button>
+    </div>
+
+    <div class="length-controls">
+      <div>
+        <p>Break Length</p>
+        <button onclick="changeBreak(-1)">−</button>
+        <span id="break-length">5</span>
+        <button onclick="changeBreak(1)">＋</button>
+      </div>
+      <div>
+        <p>Session Length</p>
+        <button onclick="changeSession(-1)">−</button>
+        <span id="session-length">25</span>
+        <button onclick="changeSession(1)">＋</button>
+      </div>
+    </div>
+
+    <p class="quote" id="quote-text">“Small progress is still progress.”</p>
+    <p id="focus-stats">Pomodoros Completed Today: 0</p>
+  </section>
+
+  <!-- ✅ This will now show up in correct place -->
+  <div id="theme-container"></div>
+
+  <section class="about-urtime">
+    <h2>✨ About UrTime</h2>
+    <p>
+      UrTime is your personal productivity companion built to help you focus, finish tasks, and feel accomplished — one Pomodoro at a time. 🚀🌱🫧
+    </p>
+
+    <div class="about-features">
+      <div class="feature-block">
+        <img src="assets/animations/plant.svg" alt="Plant growing" />
+        <h3>🌱 Grow as You Focus</h3>
+        <p>Every minute you stay focused, your plant grows! It visually tracks your discipline and motivates you to stay on task until the timer ends.</p>
+      </div>
+
+      <div class="feature-block">
+        <img src="assets/animations/rocket.svg" alt="Rocket launching" />
+        <h3>🚀 Launch with Progress</h3>
+        <p>Start a session and your rocket shakes with excitement. When you finish, it zooms into the sky — just like your goals!</p>
+      </div>
+
+      <div class="feature-block">
+        <img src="assets/animations/bubble.svg" alt="Bubbles floating" />
+        <h3>🫧 Breathe and Flow</h3>
+        <p>Select the Bubbles theme for a calm, ambient atmosphere. Perfect for deep work and gentle focus sessions.</p>
+      </div>
+
+      <div class="feature-block">
+        <h3>🎵 Personalized Vibes</h3>
+        <p>Choose from lofi beats, nature sounds, or café ambience — music runs only during focus time to keep your mind engaged.</p>
+      </div>
+      <div class="feature-block">
+  <h3>📝 Smart To-Do List</h3>
+  <p>Add your daily tasks, check them off as you go, and stay organized. Mark tasks as complete with a single click! Bonus: UrTime's built-in AI suggests YouTube videos or resources based on what you're working on — perfect for quick learning!</p>
+</div>
+
+      <div class="feature-block">
+        <h3>📅 Dashboard Calendar</h3>
+        <p>Log in to track your productivity every day. View your progress, completed Pomodoros, minutes focused, and tasks done — all neatly organized by date.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="slanted-footer">UrTime — for calm minds and clear goals.</p>
+</footer>
+
+
+<!-- 🧠 Popup that auto-closes in 10 sec -->
+<div id="popup" class="popup-overlay">
+  <div class="popup-box">
+    <p id="popup-message">🎯 Time's up!</p>
+    <button onclick="closePopup()">Let’s go 🚀</button>
+  </div>
+</div>
+
+<!-- 🎧 Audio Elements -->
+<audio id="lofi" loop src="assets/audio/lofi.mp3"></audio>
+<audio id="nature" loop src="assets/audio/nature.mp3"></audio>
+<audio id="cafe" loop src="assets/audio/cafe.mp3"></audio>
+
+<!-- 🎉 Confetti + Firebase SDKs -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<!-- 🧠 App Scripts -->
+<script src="scripts/firebase.js"></script>
+<script src="scripts/ai-helper.js"></script>
+<script src="scripts/themes.js"></script>
+<script src="scripts/script.js"></script>
+</body>
+</html>
