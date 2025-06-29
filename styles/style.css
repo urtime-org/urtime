@@ -10,7 +10,6 @@ body {
   overflow-x: hidden;
 }
 
-
 header {
   background-color: #bfc4c4;
   width: 100%;
@@ -354,33 +353,30 @@ footer {
     max-width: 90%;
   }
 
-  /* 📱 Mobile Header Fix */
   .header-top {
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
-    gap: 10px;
+    gap: 12px;
   }
 
-  .header-title {
+  .header-top h1 {
     font-size: 22px;
-    margin-bottom: 6px;
   }
 
   .header-actions {
-    display: flex;
+    position: static;
+    transform: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    margin-top: 0;
+    gap: 10px;
   }
 
   .dashboard-link,
   .logout-btn {
     width: 100%;
-    max-width: 200px;
+    max-width: 240px;
     text-align: center;
   }
 
@@ -455,3 +451,4 @@ footer {
 .slanted-footer {
   font-style: italic;
 }
+
