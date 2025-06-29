@@ -354,37 +354,41 @@ footer {
     max-width: 90%;
   }
 
+  .header-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
   .header-actions {
-    position: static;
-    margin-top: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+    gap: 10px;
   }
 }
 
-
+/* ===== ABOUT SECTION ===== */
 .about-urtime {
   max-width: 900px;
-  background: #fdfdfd;
+  background: #bfc4c4;
   margin: 40px auto;
   padding: 30px 20px;
   border-radius: 16px;
   text-align: center;
-  color: #222;
+  color: #111;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .about-urtime h2 {
   font-size: 28px;
   margin-bottom: 20px;
-}
-
-.about-urtime {
-  max-width: 900px;
-  background: #bfc4c4;
-}
-.about-urtime {
-  color: #111;
 }
 
 .about-features {
@@ -430,7 +434,7 @@ footer {
   }
 }
 
-
-.slanted-footer{
-    font-style: italic;
+/* ===== FOOTER STYLE ===== */
+.slanted-footer {
+  font-style: italic;
 }
