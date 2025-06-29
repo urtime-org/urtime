@@ -354,22 +354,39 @@ footer {
     max-width: 90%;
   }
 
+  /* 📱 Mobile Header Fix */
   .header-top {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
+    gap: 10px;
   }
 
   .header-title {
     font-size: 22px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .header-actions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 12px;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .dashboard-link,
+  .logout-btn {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+  }
+
+  .header-controls {
+    flex-direction: column;
+    align-items: center;
     gap: 10px;
   }
 }
